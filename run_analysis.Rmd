@@ -1,0 +1,94 @@
+---
+title: "Getting and Cleaning Data Final Project - Draft 1"
+author: "Andrew Mauro"
+date: "January 24, 2017"
+output: html_document
+---
+
+1. Load Data and Merge the Training and the Test sets to create one data set
+============================================================================
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+
+rm(list=ls())
+#packages
+library(data.table)
+library(dplyr)
+
+#train, test, names, and subjects
+train <- fread("UCI HAR Dataset/train/X_train.txt", sep = "auto")
+train_label <- fread("UCI HAR Dataset/train/y_train.txt", sep = "auto")
+test <- fread("UCI HAR Dataset/test/X_test.txt", sep = "auto")
+test_label <- fread("UCI HAR Dataset/test/y_test.txt", sep = "auto")
+
+
+names <- fread("UCI HAR Dataset/features.txt",sep="auto")
+subject_train <- fread("UCI HAR Dataset/train/subject_train.txt", sep = "auto")
+subject_test <- fread("UCI HAR Dataset/test/subject_test.txt", sep = "auto")
+labels <- fread("UCI HAR Dataset/activity_labels.txt",sep="auto")
+
+#apply names to objects
+names(test) <- names$V2
+names(train) <- names$V2
+names(train_label) <- "activityid"
+names(test_label) <- "activityid"
+names(subject_train) <- "subjectid"
+names(subject_test) <- "subjectid"
+
+#append subject labels and activity labels to train and test
+train <- cbind(subject_train, train, train_label)
+test <- cbind(subject_test, test, test_label)
+
+#bind train and test and properly format names
+bound <- data.frame(rbind(train,test))
+names(bound) <- make.names(names(bound),unique = TRUE)
+
+#remove
+rm(names, subject_test, subject_train, train, test, labels, test_label, train_label)
+```
+
+
+**Conclusion:** We now have one data set, 'bound', a 10,299 by 562 data frame with our training and test data. We have not appended activity labels yet.
+
+2. Extract from 'bound' the measurements on the mean and standard deviation for each measurement
+===============================================================================================
+
+```{r}
+#select only variable names with -mean. and -std.
+bound <- bound[,grep("[Mm]ean|std|activityid|subjectid", names(bound))]
+```
+
+3. Replace Activity labels with descriptive labels
+
+```{r}
+bound$activityid<- factor(bound$activityid, labels = c("walking", "walking upstairs", "walking downstairs", "sitting", "standing", "laying"))
+```
+
+
+4. Label data set variables with descriptive variable names
+
+```{r}
+names(bound) <- gsub("\\.", "", names(bound))
+names(bound) <- gsub("^t", "TimeDomain", names(bound))
+names(bound) <- gsub("tBody", "TimeDomainBody", names(bound))
+names(bound) <- gsub("Body", "Body", names(bound))
+names(bound) <- gsub("Acc", "Acceleration", names(bound))
+names(bound) <- gsub("Gyro", "Gyroscope", names(bound))
+names(bound) <- gsub("Mag", "Magnitude", names(bound))
+names(bound) <- gsub("^f", "FrenquencyDomain", names(bound))
+names(bound) <- gsub("angle", "Angle", names(bound))
+```
+
+5. Create an independent tidy data set with the average of each variable for each activity and each subject
+
+```{r}
+tidy <- tbl_df(bound)%>%
+                group_by(activityid, subjectid)%>%
+                summarise_each(funs(mean))
+tidy
+write.table(tidy, "tidy.txt", row.names = FALSE, sep = "\t")
+
+
+```
