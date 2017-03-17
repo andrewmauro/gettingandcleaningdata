@@ -1,0 +1,100 @@
+---
+title: "codeBook - Getting and Cleaning Data"
+author: "Andrew Mauro"
+date: "March 11, 2017"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+I. Data Processing Overview
+===========================
+
+The attached code can be used to process the training and test sets of movement data into a tidy data set of average movement data for each subject and for each movement type. The code first binds the training and test sets into one data set, and then extracts the variables from the bound data set related to the mean and standard deviation of each measurement. The code also applies descriptive field names to the individual movement categories and the measurement field names. Finally, the code groups the data by subject and activity type to obtain mean observations for each measurement category.
+        
+II. Time Domain Measures (Hz)
+=============================
+
+Accelerometer Measures (for axial signals X, Y, and Z) 
+-----------------------------------------------------
+
+TimeDomainBodyAccelerationmean
+TimeDomainBodyAccelerationstd
+TimeDomainGravityAccelerationmean
+TimeDomainGravityAccelerationstd
+TimeDomainBodyAccelerationJerkmean
+TimeDomainBodyAccelerationJerkstd
+
+
+Gyroscope Measures (for axial signals X, Y, and Z)
+--------------------------------------------------
+
+TimeDomainBodyGyroscopemean
+TimeDomainBodyGyroscopestd
+TimeDomainBodyGyroscopeJerkmean
+TimeDomainBodyGyroscopeJerkstd
+
+
+Acceleration and Angular Velocity Derivations (for axial signals X, Y, and Z)
+-----------------------------------------------------------------------------
+
+TimeDomainBodyAccelerationMagnitudemean
+TimeDomainBodyAccelerationMagnitudestd
+TimeDomainGravityAccelerationMagnitudemean
+TimeDomainGravityAccelerationMagnitudestd
+TimeDomainBodyAccelerationJerkMagnitudemean
+TimeDomainBodyAccelerationJerkMagnitudestd
+TimeDomainBodyGyroscopeMagnitudemean
+TimeDomainBodyGyroscopeMagnitudestd
+TimeDomainBodyGyroscopeJerkMagnitudemean
+TimeDomainBodyGyroscopeJerkMagnitudestd
+
+        
+III. Frequency Domain Measures (Hz)
+==================================
+
+Accelerometer Measures (for axial signals X, Y, and Z) 
+-----------------------------------------------------
+
+FrequencyDomainBodyAccelerationmean
+FrequencyDomainBodyAccelerationstd
+FrequencyDomainGravityAccelerationmean
+FrequencyDomainGravityAccelerationstd
+FrequencyDomainBodyAccelerationJerkmean
+FrequencyDomainBodyAccelerationJerkstd
+
+
+Gyroscope Measures (for axial signals X, Y, and Z)
+--------------------------------------------------
+
+FrequencyDomainBodyGyroscopemean
+FrequencyDomainBodyGyroscopestd
+FrequencyDomainBodyGyroscopeJerkmean
+FrequencyDomainBodyGyroscopeJerkstd
+
+
+Acceleration and Angular Velocity Derivations (for axial signals X, Y, and Z)
+-----------------------------------------------------------------------------
+
+FrequencyDomainBodyAccelerationMagnitudemean
+FrequencyDomainBodyAccelerationMagnitudestd
+FrequencyDomainGravityAccelerationMagnitudemean
+FrequencyDomainGravityAccelerationMagnitudestd
+FrequencyDomainBodyAccelerationJerkMagnitudemean
+FrequencyDomainBodyAccelerationJerkMagnitudestd
+FrequencyDomainBodyGyroscopeMagnitudemean
+FrequencyDomainBodyGyroscopeMagnitudestd
+FrequencyDomainBodyGyroscopeJerkMagnitudemean
+FrequencyDomainBodyGyroscopeJerkMagnitudestd
+
+
+
+
+IV.  Signal Window Average Measures (Hz)
+========================================
+
+AngleTimeDomainBodyAccelerationJerkMeangravityMean
+AngleTimeDomainBodyGyroscopeMeangravityMean
+AngleTimeDomainBodyGyroscopeJerkMeangravityMean
+AnglegravityMean (For Angle X, Y, Z)
+
